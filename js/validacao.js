@@ -42,23 +42,22 @@ const mensagensDeErro = {
         customError: 'O CPF digitado não é válido.' 
     },
     cep: {
-        valueMissing: ' O campo CEP não pode estar vazio.',
-        patternMismatch: 'O CEP digitado não é valido.',
-        customError: 'Não foi possível buscar CEP'
+        valueMissing: 'O campo de CEP não pode estar vazio.',
+        patternMismatch: 'O CEP digitado não é válido.',
+        customError: 'Não foi possível buscar o CEP.'
     },
     logradouro: {
-        valueMissing: ' O campo logradouro não pode estar vazio.'
-        
+        valueMissing: 'O campo de logradouro não pode estar vazio.'
     },
     cidade: {
-        valueMissing: ' O campo cidade não pode estar vazio.'
-        
+        valueMissing: 'O campo de cidade não pode estar vazio.'
     },
     estado: {
-        valueMissing: ' O campo estado não pode estar vazio.'
-        
+        valueMissing: 'O campo de estado não pode estar vazio.'
+    },
+    preco: {
+        valueMissing: 'O campo de preço não pode estar vazio.'
     }
-
 }
 
 const validadores = {
@@ -162,20 +161,19 @@ function confirmaDigito(soma) {
     return 11 - (soma % 11)
 }
 
-
-function recuperarCEP(input){
+function recuperarCEP(input) {
     const cep = input.value.replace(/\D/g, '')
     const url = `https://viacep.com.br/ws/${cep}/json/`
-    const oprions = {
+    const options = {
         method: 'GET',
         mode: 'cors',
-        headers:{
-            'content-type': 'aplication/json;charset=utf-8'
+        headers: {
+            'content-type': 'application/json;charset=utf-8'
         }
     }
 
-    if(!input.validity.patternMismatch && !input.validity.valueMissing){
-        fetch(url,oprions).then(
+    if(!input.validity.patternMismatch && !input.validity.valueMissing) {
+        fetch(url,options).then(
             response => response.json()
         ).then(
             data => {
@@ -200,4 +198,3 @@ function preencheCamposComCEP(data) {
     cidade.value = data.localidade
     estado.value = data.uf
 }
-
